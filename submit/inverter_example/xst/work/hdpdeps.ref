@@ -1,0 +1,8 @@
+V3 3
+FL /home/ise/ise_projects/submit/inverter_example/inverter.vhd 2021/11/13.15:14:29 P.20131013
+EN work/inverter 1636816846 \
+      FL /home/ise/ise_projects/submit/inverter_example/inverter.vhd \
+      PB ieee/std_logic_1164 1381692176
+AR work/inverter/Behavioral 1636816847 \
+      FL /home/ise/ise_projects/submit/inverter_example/inverter.vhd \
+      EN work/inverter 1636816846
