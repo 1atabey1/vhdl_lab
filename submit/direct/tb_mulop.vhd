@@ -27,62 +27,62 @@
 --------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
- 
+
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
- 
+
 ENTITY tb_mulop IS
 END tb_mulop;
- 
-ARCHITECTURE behavior OF tb_mulop IS 
- 
-    -- Component Declaration for the Unit Under Test (UUT)
- 
-    COMPONENT mulop
-    PORT(
-         I_1 : IN  std_logic_vector(15 downto 0);
-         I_2 : IN  std_logic_vector(15 downto 0);
-         O_1 : OUT  std_logic_vector(15 downto 0)
-        );
-    END COMPONENT;
-    
 
-   --Inputs
-   signal I_1 : std_logic_vector(15 downto 0) := (others => '0');
-   signal I_2 : std_logic_vector(15 downto 0) := (others => '0');
+ARCHITECTURE behavior OF tb_mulop IS
 
- 	--Outputs
-   signal O_1 : std_logic_vector(15 downto 0);
-   -- No clocks detected in port list. Replace I below with 
-   -- appropriate port name 
- 
-   constant I_period : time := 10 ns;
- 
+  -- Component Declaration for the Unit Under Test (UUT)
+
+  COMPONENT mulop
+    PORT (
+      I_1 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+      I_2 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+      O_1 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+    );
+  END COMPONENT;
+  --Inputs
+  SIGNAL I_1 : STD_LOGIC_VECTOR(15 DOWNTO 0) := (OTHERS => '0');
+  SIGNAL I_2 : STD_LOGIC_VECTOR(15 DOWNTO 0) := (OTHERS => '0');
+
+  --Outputs
+  SIGNAL O_1 : STD_LOGIC_VECTOR(15 DOWNTO 0);
+
+  CONSTANT I_period : TIME := 10 ns;
+
 BEGIN
- 
-	-- Instantiate the Unit Under Test (UUT)
-   uut: mulop PORT MAP (
-          I_1 => I_1,
-          I_2 => I_2,
-          O_1 => O_1
-        );
 
-   -- Clock process definitions
-   I_process :process
-   begin
-		I_1 <= "0000 0000 0000 0001";
-		I_2 <= "0000 0000 0000 0001";
-		wait for I_period/2;
-		I_1 <= "0000 0000 0000 0001";
-		I_2 <= "0000 0000 0000 0010";
-		wait for I_period/2;
-		I_1 <= "0000 0000 0000 0100";
-		I_2 <= "0000 0000 0000 0010";
-		wait for I_period/2;
-		I_1 <= "1000 0000 0000 0000";
-		I_2 <= "0000 0000 0000 0010";
-		wait for I_period/2;
-   end process;
+  -- Instantiate the Unit Under Test (UUT)
+  uut : mulop PORT MAP(
+    I_1 => I_1,
+    I_2 => I_2,
+    O_1 => O_1
+  );
+
+  -- Clock process definitions
+  I_process : PROCESS
+  BEGIN
+    -- 1*1=1
+    I_1 <= "0000000000000001";
+    I_2 <= "0000000000000001";
+    WAIT FOR I_period/2;
+    -- 1*2=2
+    I_1 <= "0000000000000001";
+    I_2 <= "0000000000000010";
+    WAIT FOR I_period/2;
+    -- 4*2=8
+    I_1 <= "0000000000000100";
+    I_2 <= "0000000000000010";
+    WAIT FOR I_period/2;
+    -- 2^15 * 2 % 
+    I_1 <= "1000000000000000";
+    I_2 <= "0000000000000010";
+    WAIT FOR I_period/2;
+  END PROCESS;
 
 END;
