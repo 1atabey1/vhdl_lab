@@ -3,30 +3,75 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="/home/ise/ise_projects/vhdl_lab/submit/direct/tb_mulop_isim_beh.wdb" id="1" type="auto">
+      <db_ref path="/home/ise/ise_projects/vhdl_lab/submit/direct/testbench_isim_beh.wdb" id="1" type="auto">
          <top_modules>
             <top_module name="numeric_std" />
             <top_module name="std_logic_1164" />
             <top_module name="std_logic_arith" />
             <top_module name="std_logic_unsigned" />
-            <top_module name="tb_mulop" />
+            <top_module name="testbench" />
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="3" />
-   <wvobject fp_name="/tb_mulop/i_1" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">i_1[15:0]</obj_property>
-      <obj_property name="ObjectShortName">i_1[15:0]</obj_property>
+   <WVObjectSize size="14" />
+   <wvobject fp_name="/testbench/x1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">x1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">x1[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/x2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">x2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">x2[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/x3" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">x3[15:0]</obj_property>
+      <obj_property name="ObjectShortName">x3[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/x4" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">x4[15:0]</obj_property>
+      <obj_property name="ObjectShortName">x4[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/z1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">z1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">z1[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/z2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">z2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">z2[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/z3" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">z3[15:0]</obj_property>
+      <obj_property name="ObjectShortName">z3[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/z4" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">z4[15:0]</obj_property>
+      <obj_property name="ObjectShortName">z4[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/z5" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">z5[15:0]</obj_property>
+      <obj_property name="ObjectShortName">z5[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/z6" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">z6[15:0]</obj_property>
+      <obj_property name="ObjectShortName">z6[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/y1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">y1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">y1[15:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_mulop/i_2" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">i_2[15:0]</obj_property>
-      <obj_property name="ObjectShortName">i_2[15:0]</obj_property>
+   <wvobject fp_name="/testbench/y2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">y2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">y2[15:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_mulop/o_1" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">o_1[15:0]</obj_property>
-      <obj_property name="ObjectShortName">o_1[15:0]</obj_property>
+   <wvobject fp_name="/testbench/y3" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">y3[15:0]</obj_property>
+      <obj_property name="ObjectShortName">y3[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/y4" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">y4[15:0]</obj_property>
+      <obj_property name="ObjectShortName">y4[15:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
 </wave_config>

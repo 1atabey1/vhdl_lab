@@ -30,16 +30,16 @@ architecture behavior of testbench is
   end component;
 
   -- signals
-  signal X1 : std_logic_vector(15 downto 0);
-  signal X2 : std_logic_vector(15 downto 0);
-  signal X3 : std_logic_vector(15 downto 0);
-  signal X4 : std_logic_vector(15 downto 0);
-  signal Z1 : std_logic_vector(15 downto 0);
-  signal Z2 : std_logic_vector(15 downto 0);
-  signal Z3 : std_logic_vector(15 downto 0);
-  signal Z4 : std_logic_vector(15 downto 0);
-  signal Z5 : std_logic_vector(15 downto 0);
-  signal Z6 : std_logic_vector(15 downto 0);
+  signal X1 : std_logic_vector(15 downto 0) := (others => '0');
+  signal X2 : std_logic_vector(15 downto 0) := (others => '0');
+  signal X3 : std_logic_vector(15 downto 0) := (others => '0');
+  signal X4 : std_logic_vector(15 downto 0) := (others => '0');
+  signal Z1 : std_logic_vector(15 downto 0) := (others => '0');
+  signal Z2 : std_logic_vector(15 downto 0) := (others => '0');
+  signal Z3 : std_logic_vector(15 downto 0) := (others => '0');
+  signal Z4 : std_logic_vector(15 downto 0) := (others => '0');
+  signal Z5 : std_logic_vector(15 downto 0) := (others => '0');
+  signal Z6 : std_logic_vector(15 downto 0) := (others => '0');
   signal Y1 : std_logic_vector(15 downto 0);
   signal Y2 : std_logic_vector(15 downto 0);
   signal Y3 : std_logic_vector(15 downto 0);
