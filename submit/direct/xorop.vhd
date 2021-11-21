@@ -30,16 +30,16 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity xorop is
-    Port ( X : in  STD_LOGIC_VECTOR (15 downto 0);
-           Z : in  STD_LOGIC_VECTOR (15 downto 0);
-           Y : out  STD_LOGIC_VECTOR (15 downto 0));
+    Port ( I_1 : in  STD_LOGIC_VECTOR (15 downto 0);
+           I_2 : in  STD_LOGIC_VECTOR (15 downto 0);
+           O_1 : out  STD_LOGIC_VECTOR (15 downto 0));
 end xorop;
 
 architecture Behavioral of xorop is
 begin
-	XOR_proc : process(X,Z)
+	XOR_proc : process(I_1,I_2)
 	begin
-		Y <= X XOR Z;
+		O_1 <= I_1 XOR I_2;
 	end process XOR_proc;
 end Behavioral;
 

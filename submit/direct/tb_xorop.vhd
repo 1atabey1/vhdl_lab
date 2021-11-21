@@ -25,50 +25,57 @@
 -- to guarantee that the testbench will bind correctly to the post-implementation 
 -- simulation model.
 --------------------------------------------------------------------------------
-LIBRARY ieee;
-USE ieee.std_logic_1164.ALL;
-USE ieee.numeric_std.ALL;
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
-ENTITY tb_xorop IS
-END tb_xorop;
+entity tb_xorop is
+end tb_xorop;
 
-ARCHITECTURE behavior OF tb_xorop IS
+architecture behavior of tb_xorop is
 
-   -- Component Declaration for the Unit Under Test (UUT)
+  -- Component Declaration for the Unit Under Test (UUT)
 
-   COMPONENT xorop
-      PORT (
-         X : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-         Z : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-         Y : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
-      );
-   END COMPONENT;
-   --Inputs
-   SIGNAL X : STD_LOGIC_VECTOR(15 DOWNTO 0) := (OTHERS => '0');
-   SIGNAL Z : STD_LOGIC_VECTOR(15 DOWNTO 0) := (OTHERS => '0');
+  component xorop
+    port (
+      I_1 : in std_logic_vector(15 downto 0);
+      I_2 : in std_logic_vector(15 downto 0);
+      O_1 : out std_logic_vector(15 downto 0)
+    );
+  end component;
+  --Inputs
+  signal I_1 : std_logic_vector(15 downto 0) := (others => '0');
+  signal I_2 : std_logic_vector(15 downto 0) := (others => '0');
 
-   --Outputs
-   SIGNAL Y : STD_LOGIC_VECTOR(15 DOWNTO 0);
-BEGIN
+  --Outputs
+  signal O_1 : std_logic_vector(15 downto 0);
+begin
 
-   -- Instantiate the Unit Under Test (UUT)
-   uut : xorop PORT MAP(
-      X => X,
-      Z => Z,
-      Y => Y
-   );
+  -- Instantiate the Unit Under Test (UUT)
+  uut : xorop port map(
+    I_1 => I_1,
+    I_2 => I_2,
+    O_1 => O_1
+  );
 
-   -- Stimulus process
-   stim_proc : PROCESS
-   BEGIN
-      -- insert stimulus here 
-      X <= (15 DOWNTO 0 => '0');
-      Z <= (15 DOWNTO 0 => '0');
-      X(6) <=  '1';
-      Z(6) <=  '1'; 
-      WAIT FOR 100 ns;
-      Z(5) <= '1';
-		WAIT FOR 100 ns;
-   END PROCESS;
+  --  Test Bench Statements
+  tb : process
+  begin
 
-END;
+    wait for 100 ns; -- wait until global set/reset completes
+
+    I_1 <= x"0000";
+    I_2 <= x"0000";
+
+    wait for 100 ns; -- wait to settle
+
+    I_1 <= x"1234";
+    I_2 <= x"5678";
+
+    wait for 100 ns; -- wait to settle
+    I_2 <= x"0000";
+
+    wait; -- will wait forever
+  end process tb;
+  --  End Test Bench 
+end;

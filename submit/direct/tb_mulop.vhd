@@ -25,64 +25,104 @@
 -- to guarantee that the testbench will bind correctly to the post-implementation 
 -- simulation model.
 --------------------------------------------------------------------------------
-LIBRARY ieee;
-USE ieee.std_logic_1164.ALL;
+library ieee;
+use ieee.std_logic_1164.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
 
-ENTITY tb_mulop IS
-END tb_mulop;
+entity tb_mulop is
+end tb_mulop;
 
-ARCHITECTURE behavior OF tb_mulop IS
+architecture behavior of tb_mulop is
 
   -- Component Declaration for the Unit Under Test (UUT)
 
-  COMPONENT mulop
-    PORT (
-      I_1 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-      I_2 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-      O_1 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+  component mulop
+    port (
+      I_1 : in std_logic_vector(15 downto 0);
+      I_2 : in std_logic_vector(15 downto 0);
+      O_1 : out std_logic_vector(15 downto 0)
     );
-  END COMPONENT;
+  end component;
   --Inputs
-  SIGNAL I_1 : STD_LOGIC_VECTOR(15 DOWNTO 0) := (OTHERS => '0');
-  SIGNAL I_2 : STD_LOGIC_VECTOR(15 DOWNTO 0) := (OTHERS => '0');
+  signal I_1 : std_logic_vector(15 downto 0) := (others => '0');
+  signal I_2 : std_logic_vector(15 downto 0) := (others => '0');
 
   --Outputs
-  SIGNAL O_1 : STD_LOGIC_VECTOR(15 DOWNTO 0);
+  signal O_1 : std_logic_vector(15 downto 0);
 
-  CONSTANT I_period : TIME := 10 ns;
-
-BEGIN
+begin
 
   -- Instantiate the Unit Under Test (UUT)
-  uut : mulop PORT MAP(
+  uut : mulop port map(
     I_1 => I_1,
     I_2 => I_2,
     O_1 => O_1
   );
 
-  -- Clock process definitions
-  I_process : PROCESS
-  BEGIN
-    -- 1*1=1
-    I_1 <= "0000000000000001";
-    I_2 <= "0000000000000001";
-    WAIT FOR I_period/2;
-    -- 1*2=2
-    I_1 <= "0000000000000001";
-    I_2 <= "0000000000000010";
-    WAIT FOR I_period/2;
-    -- 4*2=8
-    I_1 <= "0000000000000100";
-    I_2 <= "0000000000000010";
-    WAIT FOR I_period/2;
-    -- 2^15 * 2 % 
-    I_1 <= "1000000000000000";
-    I_2 <= "0000000000000010";
-    WAIT FOR I_period/2;
-  END PROCESS;
+  --  Test Bench Statements
+  tb : process
+  begin
 
-END;
+    wait for 100 ns; -- wait until global set/reset completes
+
+    I_1 <= x"0000";
+    I_2 <= x"0000";
+
+    wait for 100 ns; -- time to settle
+
+    I_1 <= x"0001";
+    I_2 <= x"0000";
+
+    wait for 100 ns; -- time to settle
+
+    I_1 <= x"0001";
+    I_2 <= x"0001";
+
+    wait for 100 ns; -- time to settle
+
+    I_1 <= x"0003";
+    I_2 <= x"0001";
+
+    wait for 100 ns; -- time to settle
+
+    I_1 <= x"0003";
+    I_2 <= x"0003";
+
+    wait for 100 ns; -- time to settle
+
+    I_1 <= x"7fff";
+    I_2 <= x"0003";
+
+    wait for 100 ns; -- time to settle
+
+    I_1 <= x"7fff";
+    I_2 <= x"7fff";
+
+    wait for 100 ns; -- time to settle
+
+    I_1 <= x"ffff";
+    I_2 <= x"7fff";
+
+    wait for 100 ns; -- time to settle
+
+    I_1 <= x"ffff";
+    I_2 <= x"ffff";
+
+    wait for 100 ns; -- time to settle
+
+    I_1 <= x"8000";
+    I_2 <= x"ffff";
+
+    wait for 100 ns; -- time to settle
+
+    I_1 <= x"8000";
+    I_2 <= x"8000";
+
+    wait; -- will wait forever
+  end process tb;
+  --  End Test Bench 
+
+end;
