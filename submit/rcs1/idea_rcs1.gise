@@ -31,9 +31,11 @@
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="register.prj"/>
     <file xil_pn:fileType="FILE_XST_STX" xil_pn:name="register.stx"/>
     <file xil_pn:fileType="FILE_XST" xil_pn:name="register.xst"/>
-    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_keygen_beh.prj"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_control_beh.prj"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="tb_control_isim_beh.exe"/>
+    <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="tb_control_isim_beh.wdb"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_control_stx_beh.prj"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="tb_keygen_isim_beh.exe"/>
-    <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="tb_keygen_isim_beh.wdb"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_keygen_stx_beh.prj"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="tb_mux2x1_isim_beh.exe"/>
     <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="tb_mux2x1_stx_beh.prj"/>
@@ -46,11 +48,11 @@
   </files>
 
   <transforms xmlns="http://www.xilinx.com/XMLSchema">
-    <transform xil_pn:end_ts="1641637670" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1641637670">
+    <transform xil_pn:end_ts="1641644781" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1641644781">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1641637722" xil_pn:in_ck="-2339331570774034445" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1641637721">
+    <transform xil_pn:end_ts="1641644781" xil_pn:in_ck="2554749572226843833" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1641644781">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="clk_div.vhd"/>
@@ -62,25 +64,26 @@
       <outfile xil_pn:name="mux2x1.vhd"/>
       <outfile xil_pn:name="register.vhd"/>
       <outfile xil_pn:name="rxcver.vhd"/>
+      <outfile xil_pn:name="tb_control.vhd"/>
       <outfile xil_pn:name="tb_keygen.vhd"/>
       <outfile xil_pn:name="tb_mux2x1.vhd"/>
       <outfile xil_pn:name="tb_register.vhd"/>
       <outfile xil_pn:name="txmit.vhd"/>
       <outfile xil_pn:name="uart.vhd"/>
     </transform>
-    <transform xil_pn:end_ts="1641637670" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="-5530048500413658930" xil_pn:start_ts="1641637670">
+    <transform xil_pn:end_ts="1641644781" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="7910544215084995244" xil_pn:start_ts="1641644781">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1641637670" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="2529988811275173456" xil_pn:start_ts="1641637670">
+    <transform xil_pn:end_ts="1641644781" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="8526511531272303534" xil_pn:start_ts="1641644781">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1641637670" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="-5919875462312676356" xil_pn:start_ts="1641637670">
+    <transform xil_pn:end_ts="1641644782" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="-5919875462312676356" xil_pn:start_ts="1641644781">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1641637725" xil_pn:in_ck="-2339331570774034445" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1641637725">
+    <transform xil_pn:end_ts="1641644782" xil_pn:in_ck="2554749572226843833" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1641644782">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="clk_div.vhd"/>
@@ -92,27 +95,31 @@
       <outfile xil_pn:name="mux2x1.vhd"/>
       <outfile xil_pn:name="register.vhd"/>
       <outfile xil_pn:name="rxcver.vhd"/>
+      <outfile xil_pn:name="tb_control.vhd"/>
       <outfile xil_pn:name="tb_keygen.vhd"/>
       <outfile xil_pn:name="tb_mux2x1.vhd"/>
       <outfile xil_pn:name="tb_register.vhd"/>
       <outfile xil_pn:name="txmit.vhd"/>
       <outfile xil_pn:name="uart.vhd"/>
     </transform>
-    <transform xil_pn:end_ts="1641637730" xil_pn:in_ck="-2339331570774034445" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="-2293755546634651394" xil_pn:start_ts="1641637725">
+    <transform xil_pn:end_ts="1641644785" xil_pn:in_ck="2554749572226843833" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="-8600984996180576582" xil_pn:start_ts="1641644782">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="fuse.log"/>
       <outfile xil_pn:name="isim"/>
-      <outfile xil_pn:name="tb_keygen_beh.prj"/>
-      <outfile xil_pn:name="tb_keygen_isim_beh.exe"/>
+      <outfile xil_pn:name="isim.log"/>
+      <outfile xil_pn:name="tb_control_beh.prj"/>
+      <outfile xil_pn:name="tb_control_isim_beh.exe"/>
       <outfile xil_pn:name="xilinxsim.ini"/>
     </transform>
-    <transform xil_pn:end_ts="1641637731" xil_pn:in_ck="4457609372965703680" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-4791590970244721109" xil_pn:start_ts="1641637730">
+    <transform xil_pn:end_ts="1641644785" xil_pn:in_ck="1827895983439474597" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-5254427880682459385" xil_pn:start_ts="1641644785">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <outfile xil_pn:name="isim.cmd"/>
       <outfile xil_pn:name="isim.log"/>
-      <outfile xil_pn:name="tb_keygen_isim_beh.wdb"/>
+      <outfile xil_pn:name="tb_control_isim_beh.wdb"/>
     </transform>
   </transforms>
 
