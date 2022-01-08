@@ -82,6 +82,7 @@ BEGIN
 
    -- Stimulus process
    stim_proc: process
+	constant timeout_ns : time := 50 ns;
    begin		
       -- hold reset state for 100 ns.
       wait for 100 ns;
@@ -90,31 +91,40 @@ BEGIN
 		KEYIN <= x"00010002000300040005000600070008";
 		SEL <= x"0";
 		
-		wait for 100 ns;
+		wait for timeout_ns;
 		SEL <= x"1";
 		
-		wait for 100 ns;
+		wait for timeout_ns;
 		SEL <= x"2";
 		
-		wait for 100 ns;
+		wait for timeout_ns;
 		SEL <= x"3";
 		
-		wait for 100 ns;
+		wait for timeout_ns;
 		SEL <= x"4";
 		
-		wait for 100 ns;
+		wait for timeout_ns;
 		SEL <= x"5";
 		
-		wait for 100 ns;
+		wait for timeout_ns;
 		SEL <= x"6";
 		
-		wait for 100 ns;
+		wait for timeout_ns;
 		SEL <= x"7";
 		
-		wait for 100 ns;
+		wait for timeout_ns;
 		SEL <= x"8";
 		
-      wait;
+		wait for timeout_ns;
+		SEL <= x"7";
+		
+		wait for timeout_ns;
+      SEL <= x"6";
+		
+		wait for timeout_ns;
+		SEL <= x"0";
+		
+		wait;
    end process;
 
 END;

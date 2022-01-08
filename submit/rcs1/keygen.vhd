@@ -17,133 +17,128 @@
 -- Additional Comments: 
 --
 ----------------------------------------------------------------------------------
-LIBRARY IEEE;
-USE IEEE.STD_LOGIC_1164.ALL;
+library IEEE;
+use IEEE.STD_LOGIC_1164.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
-USE IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.all;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-ENTITY keygen IS
-    PORT (
-        KEYIN : IN STD_LOGIC_VECTOR(127 DOWNTO 0);
-        SEL : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-        PKEY1 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-        PKEY2 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-        PKEY3 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-        PKEY4 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-        PKEY5 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-        PKEY6 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0));
-END keygen;
+entity keygen is
+  port (
+    KEYIN : in std_logic_vector(127 downto 0);
+    SEL : in std_logic_vector(3 downto 0);
+    PKEY1 : out std_logic_vector(15 downto 0);
+    PKEY2 : out std_logic_vector(15 downto 0);
+    PKEY3 : out std_logic_vector(15 downto 0);
+    PKEY4 : out std_logic_vector(15 downto 0);
+    PKEY5 : out std_logic_vector(15 downto 0);
+    PKEY6 : out std_logic_vector(15 downto 0));
+end keygen;
 
-ARCHITECTURE Behavioral OF keygen IS
-    FUNCTION wrapped_subtract(
-        minuend : unsigned(15 DOWNTO 0);
-        subtrahend : unsigned(15 DOWNTO 0);
-        wrap_at : unsigned(15 DOWNTO 0))
-        RETURN unsigned IS
-        VARIABLE RET : unsigned(15 DOWNTO 0);
-    BEGIN
-        IF minuend >= subtrahend THEN
-            RET := minuend - subtrahend;
-        ELSE
-            RET := wrap_at - (subtrahend - minuend);
-        END IF;
-        RETURN RET;
-    END FUNCTION;
+architecture Behavioral of keygen is
+  signal TEMPKEY : std_logic_vector(127 downto 0);
+  constant UNDEFINED16 : std_logic_vector(15 downto 0) := (others => 'U');
 
-    FUNCTION get_pkey(
-        key : STD_LOGIC_VECTOR(127 DOWNTO 0);
-        round_num : UNSIGNED(3 DOWNTO 0);
-        pkey_num : UNSIGNED(3 DOWNTO 0))
-        RETURN STD_LOGIC_VECTOR IS
-        VARIABLE i, start_bit, num_prev_bits, bit_hi, bit_lo : unsigned(15 DOWNTO 0);
-        CONSTANT KEY_LEN : UNSIGNED(7 DOWNTO 0) := x"80";
-        CONSTANT PKEY_LEN : UNSIGNED(7 DOWNTO 0) := x"10";
-        CONSTANT PKEYS_PER_ROUND : UNSIGNED(7 DOWNTO 0) := x"06";
-        CONSTANT SHIFT_VAL : UNSIGNED(7 DOWNTO 0) := x"19";
-    BEGIN
-        i := PKEYS_PER_ROUND * (round_num - x"1") + pkey_num;
-        num_prev_bits := (i - x"0001") * PKEY_LEN;
-        start_bit := (KEY_LEN - x"0001") - SHIFT_VAL * (num_prev_bits(6 DOWNTO 0));
-		  num_prev_bits := x"0000";
-        bit_hi := wrapped_subtract(start_bit, num_prev_bits(6 DOWNTO 0), KEY_LEN - x"01");
-        bit_lo := wrapped_subtract(bit_hi, PKEY_LEN - x"01", KEY_LEN - x"01");
-        RETURN key(to_integer(bit_hi) DOWNTO to_integer(bit_lo));
-    END FUNCTION;
-    CONSTANT UNDEFINED16 : STD_LOGIC_VECTOR(15 DOWNTO 0) := (OTHERS => 'U');
-BEGIN
-    SEL_PROC : PROCESS (SEL, KEYIN)
-    BEGIN
-        CASE SEL IS
-            WHEN x"0" =>
-                PKEY1 <= get_pkey(KEYIN, x"1", x"1");
-                PKEY2 <= get_pkey(KEYIN, x"1", x"2");
-                PKEY3 <= get_pkey(KEYIN, x"1", x"3");
-                PKEY4 <= get_pkey(KEYIN, x"1", x"4");
-                PKEY5 <= get_pkey(KEYIN, x"1", x"5");
-                PKEY6 <= get_pkey(KEYIN, x"1", x"6");
-            -- WHEN x"1" =>
-            --     PKEY1 <= get_pkey(KEYIN, x"2", x"1");
-            --     PKEY2 <= get_pkey(KEYIN, x"2", x"2");
-            --     PKEY3 <= get_pkey(KEYIN, x"2", x"3");
-            --     PKEY4 <= get_pkey(KEYIN, x"2", x"4");
-            --     PKEY5 <= get_pkey(KEYIN, x"2", x"5");
-            --     PKEY6 <= get_pkey(KEYIN, x"2", x"6");
-            -- WHEN x"2" =>
-            --     PKEY1 <= get_pkey(KEYIN, x"3", x"1");
-            --     PKEY2 <= get_pkey(KEYIN, x"3", x"2");
-            --     PKEY3 <= get_pkey(KEYIN, x"3", x"3");
-            --     PKEY4 <= get_pkey(KEYIN, x"3", x"4");
-            --     PKEY5 <= get_pkey(KEYIN, x"3", x"5");
-            --     PKEY6 <= get_pkey(KEYIN, x"3", x"6");
-            -- WHEN x"3" =>
-            --     PKEY1 <= get_pkey(KEYIN, x"4", x"1");
-            --     PKEY2 <= get_pkey(KEYIN, x"4", x"2");
-            --     PKEY3 <= get_pkey(KEYIN, x"4", x"3");
-            --     PKEY4 <= get_pkey(KEYIN, x"4", x"4");
-            --     PKEY5 <= get_pkey(KEYIN, x"4", x"5");
-            --     PKEY6 <= get_pkey(KEYIN, x"4", x"6");
-            -- WHEN x"4" =>
-            --     PKEY1 <= get_pkey(KEYIN, x"5", x"1");
-            --     PKEY2 <= get_pkey(KEYIN, x"5", x"2");
-            --     PKEY3 <= get_pkey(KEYIN, x"5", x"3");
-            --     PKEY4 <= get_pkey(KEYIN, x"5", x"4");
-            --     PKEY5 <= get_pkey(KEYIN, x"5", x"5");
-            --     PKEY6 <= get_pkey(KEYIN, x"5", x"6");
-            -- WHEN x"5" =>
-            --     PKEY1 <= get_pkey(KEYIN, x"6", x"1");
-            --     PKEY2 <= get_pkey(KEYIN, x"6", x"2");
-            --     PKEY3 <= get_pkey(KEYIN, x"6", x"3");
-            --     PKEY4 <= get_pkey(KEYIN, x"6", x"4");
-            --     PKEY5 <= get_pkey(KEYIN, x"6", x"5");
-            --     PKEY6 <= get_pkey(KEYIN, x"6", x"6");
-            -- WHEN x"6" =>
-            --     PKEY1 <= get_pkey(KEYIN, x"7", x"1");
-            --     PKEY2 <= get_pkey(KEYIN, x"7", x"2");
-            --     PKEY3 <= get_pkey(KEYIN, x"7", x"3");
-            --     PKEY4 <= get_pkey(KEYIN, x"7", x"4");
-            --     PKEY5 <= get_pkey(KEYIN, x"7", x"5");
-            --     PKEY6 <= get_pkey(KEYIN, x"7", x"6");
-            -- WHEN x"7" =>
-            --     PKEY1 <= get_pkey(KEYIN, x"8", x"1");
-            --     PKEY2 <= get_pkey(KEYIN, x"8", x"2");
-            --     PKEY3 <= get_pkey(KEYIN, x"8", x"3");
-            --     PKEY4 <= get_pkey(KEYIN, x"8", x"4");
-            --     PKEY5 <= get_pkey(KEYIN, x"8", x"5");
-            --     PKEY6 <= get_pkey(KEYIN, x"8", x"6");
-            WHEN OTHERS =>
-                PKEY1 <= UNDEFINED16;
-                PKEY2 <= UNDEFINED16;
-                PKEY3 <= UNDEFINED16;
-                PKEY4 <= UNDEFINED16;
-                PKEY5 <= UNDEFINED16;
-                PKEY6 <= UNDEFINED16;
-        END CASE;
-    END PROCESS;
-END Behavioral;
+  function vector_ror (
+    value : std_logic_vector(127 downto 0);
+    shift : integer)
+    return std_logic_vector is
+    variable shift_vaL_scaled : integer;
+  begin
+    shift_vaL_scaled := shift mod 128;
+    return value((127 - shift_vaL_scaled) downto 0) & value(127 downto (127 - shift_vaL_scaled + 1));
+  end function;
+begin
+  SEL_PROC : process (SEL, KEYIN, TEMPKEY)
+  begin
+    case SEL is
+      when x"0" =>
+        PKEY1 <= KEYIN(127 downto 112);
+        PKEY2 <= KEYIN(111 downto 96);
+        PKEY3 <= KEYIN(95 downto 80);
+        PKEY4 <= KEYIN(79 downto 64);
+        PKEY5 <= KEYIN(63 downto 48);
+        PKEY6 <= KEYIN(47 downto 32);
+      when x"1" =>
+        PKEY1 <= KEYIN(31 downto 16);
+        PKEY2 <= KEYIN(15 downto 0);
+        TEMPKEY <= vector_ror(KEYIN, 1 * 25);
+        PKEY3 <= TEMPKEY(127 downto 112);
+        PKEY4 <= TEMPKEY(111 downto 96);
+        PKEY5 <= TEMPKEY(95 downto 80);
+        PKEY6 <= TEMPKEY(79 downto 64);
+      WHEN x"2" =>
+        TEMPKEY <= vector_ror(KEYIN, 1 * 25);
+        PKEY1 <= TEMPKEY(63 downto 48);
+        PKEY2 <= TEMPKEY(47 downto 32);
+        PKEY3 <= TEMPKEY(31 downto 16);
+        PKEY4 <= TEMPKEY(15 downto 0);
+        TEMPKEY <= vector_ror(KEYIN, 2 * 25);
+        PKEY5 <= TEMPKEY(127 downto 112);
+        PKEY6 <= TEMPKEY(111 downto 96);
+      WHEN x"3" =>
+        TEMPKEY <= vector_ror(KEYIN, 2 * 25);
+        PKEY1 <= TEMPKEY(95 downto 80);
+        PKEY2 <= TEMPKEY(79 downto 64);
+        PKEY3 <= TEMPKEY(63 downto 48);
+        PKEY4 <= TEMPKEY(47 downto 32);
+        PKEY5 <= TEMPKEY(31 downto 16);
+        PKEY6 <= TEMPKEY(15 downto 0);
+      WHEN x"4" =>
+        TEMPKEY <= vector_ror(KEYIN, 3 * 25);
+        PKEY1 <= TEMPKEY(127 downto 112);
+        PKEY2 <= TEMPKEY(111 downto 96);
+        PKEY3 <= TEMPKEY(95 downto 80);
+        PKEY4 <= TEMPKEY(79 downto 64);
+        PKEY5 <= TEMPKEY(63 downto 48);
+        PKEY6 <= TEMPKEY(47 downto 32);
+      WHEN x"5" =>
+        TEMPKEY <= vector_ror(KEYIN, 3 * 25);
+        PKEY1 <= TEMPKEY(31 downto 16);
+        PKEY2 <= TEMPKEY(15 downto 0);
+        TEMPKEY <= vector_ror(KEYIN, 4 * 25);
+        PKEY3 <= TEMPKEY(127 downto 112);
+        PKEY4 <= TEMPKEY(111 downto 96);
+        PKEY5 <= TEMPKEY(95 downto 80);
+        PKEY6 <= TEMPKEY(79 downto 64);
+      WHEN x"6" =>
+        TEMPKEY <= vector_ror(KEYIN, 4 * 25);
+        PKEY1 <= TEMPKEY(63 downto 48);
+        PKEY2 <= TEMPKEY(47 downto 32);
+        PKEY3 <= TEMPKEY(31 downto 16);
+        PKEY4 <= TEMPKEY(15 downto 0);
+        TEMPKEY <= vector_ror(KEYIN, 5 * 25);
+        PKEY5 <= TEMPKEY(127 downto 112);
+        PKEY6 <= TEMPKEY(111 downto 96);
+      WHEN x"7" =>
+        TEMPKEY <= vector_ror(KEYIN, 5 * 25);
+        PKEY1 <= TEMPKEY(95 downto 80);
+        PKEY2 <= TEMPKEY(79 downto 64);
+        PKEY3 <= TEMPKEY(63 downto 48);
+        PKEY4 <= TEMPKEY(47 downto 32);
+        PKEY5 <= TEMPKEY(31 downto 16);
+        PKEY6 <= TEMPKEY(15 downto 0);
+      WHEN x"8" =>
+        TEMPKEY <= vector_ror(KEYIN, 6 * 25);
+        PKEY1 <= TEMPKEY(127 downto 112);
+        PKEY2 <= TEMPKEY(111 downto 96);
+        PKEY3 <= TEMPKEY(95 downto 80);
+        PKEY4 <= TEMPKEY(79 downto 64);
+        PKEY5 <= TEMPKEY(63 downto 48);
+        PKEY6 <= TEMPKEY(47 downto 32);
+      when others =>
+        PKEY1 <= UNDEFINED16;
+        PKEY2 <= UNDEFINED16;
+        PKEY3 <= UNDEFINED16;
+        PKEY4 <= UNDEFINED16;
+        PKEY5 <= UNDEFINED16;
+        PKEY6 <= UNDEFINED16;
+    end case;
+  end process;
+end Behavioral;
