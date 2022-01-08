@@ -105,7 +105,7 @@ architecture Structural of idea_single is
       S : in std_logic;
       D0 : in std_logic_vector(15 downto 0);
       D1 : in std_logic_vector(15 downto 0);
-      Q : out std_logic_vector(15 downto 0));
+      O : out std_logic_vector(15 downto 0));
   end component;
 
   component round
@@ -150,28 +150,28 @@ begin
     S => muxxer,
     D0 => X_1,
     D1 => r1_out,
-    Q => m1_out);
+    O => m1_out);
 
   mux2 : mux2x1
   port map(
     S => muxxer,
     D0 => X_2,
     D1 => r2_out,
-    Q => m2_out);
+    O => m2_out);
 
   mux3 : mux2x1
   port map(
     S => muxxer,
     D0 => X_3,
     D1 => r3_out,
-    Q => m3_out);
+    O => m3_out);
 
   mux4 : mux2x1
   port map(
     S => muxxer,
     D0 => X_4,
     D1 => r4_out,
-    Q => m4_out);
+    O => m4_out);
 
   -- output registers
   r1 : REG

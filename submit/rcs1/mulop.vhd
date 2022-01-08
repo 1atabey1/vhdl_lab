@@ -40,12 +40,12 @@ architecture Behavioral of mulop is
   constant two16 : std_logic_vector(16 downto 0) := '1' & all_zeros;
   signal ab_mod_2n : std_logic_vector(15 downto 0);
   signal ab_div_2n : std_logic_vector(16 downto 0);
-  signal ret : std_logic_vector(16 downto 0);
   signal a : std_logic_vector(16 downto 0);
   signal b : std_logic_vector(16 downto 0);
-  signal ab : std_logic_vector(33 downto 0);
 begin
-  mult_proc : process (I_1, I_2, ab, b, a, ret, ab_div_2n, ab_mod_2n)
+  mult_proc : process (I_1, I_2, b, a, ab_div_2n, ab_mod_2n)
+  variable ab : std_logic_vector(33 downto 0);
+  variable ret : std_logic_vector(16 downto 0);
   begin
     -- check for 0 inputs
     if I_1 = all_zeros then
@@ -60,15 +60,15 @@ begin
       b <= '0' & I_2;
     end if;
     -- compute full width product
-    ab <= std_logic_vector(unsigned(a) * unsigned(b));
+    ab := std_logic_vector(unsigned(a) * unsigned(b));
     -- compute modulo 2n
     ab_mod_2n <= ab(15 downto 0);
     ab_div_2n <= ab(32 downto 16);
 
     if (ab_mod_2n >= ab_div_2n) then
-      ret <= ab_mod_2n - ab_div_2n;
+      ret := ab_mod_2n - ab_div_2n;
     else
-      ret <= ab_mod_2n - ab_div_2n + two16 + 1;
+      ret := ab_mod_2n - ab_div_2n + two16 + 1;
     end if;
 
     O_1 <= ret(15 downto 0);

@@ -34,13 +34,10 @@ ENTITY mux2x1 IS
         S : IN STD_LOGIC;
         D0 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
         D1 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-        Q : OUT STD_LOGIC_VECTOR(15 DOWNTO 0));
+        O : OUT STD_LOGIC_VECTOR(15 DOWNTO 0));
 END mux2x1;
 
 ARCHITECTURE Behavioral OF mux2x1 IS
-    CONSTANT UNDEFINED16 : STD_LOGIC_VECTOR(15 DOWNTO 0) := (OTHERS => 'U');
 BEGIN
-    Q <= D0 WHEN S = '0' ELSE
-        D1 WHEN S = '1' ELSE
-        UNDEFINED16;
+	O <= D1 when (S = '1') else D0;
 END Behavioral;

@@ -42,8 +42,6 @@ entity keygen is
 end keygen;
 
 architecture Behavioral of keygen is
-  signal TEMPKEY : std_logic_vector(127 downto 0);
-  constant UNDEFINED16 : std_logic_vector(15 downto 0) := (others => 'U');
 
   function vector_ror (
     value : std_logic_vector(127 downto 0);
@@ -55,7 +53,8 @@ architecture Behavioral of keygen is
     return value((127 - shift_vaL_scaled) downto 0) & value(127 downto (127 - shift_vaL_scaled + 1));
   end function;
 begin
-  SEL_PROC : process (SEL, KEYIN, TEMPKEY)
+  SEL_PROC : process (SEL, KEYIN)
+  variable TEMPKEY : std_logic_vector(127 downto 0);
   begin
     case SEL is
       when x"0" =>
@@ -68,22 +67,21 @@ begin
       when x"1" =>
         PKEY1 <= KEYIN(31 downto 16);
         PKEY2 <= KEYIN(15 downto 0);
-        TEMPKEY <= vector_ror(KEYIN, 1 * 25);
+        TEMPKEY := vector_ror(KEYIN, 1 * 25);
         PKEY3 <= TEMPKEY(127 downto 112);
         PKEY4 <= TEMPKEY(111 downto 96);
         PKEY5 <= TEMPKEY(95 downto 80);
         PKEY6 <= TEMPKEY(79 downto 64);
       WHEN x"2" =>
-        TEMPKEY <= vector_ror(KEYIN, 1 * 25);
+        TEMPKEY := vector_ror(KEYIN, 1 * 25);
         PKEY1 <= TEMPKEY(63 downto 48);
         PKEY2 <= TEMPKEY(47 downto 32);
         PKEY3 <= TEMPKEY(31 downto 16);
         PKEY4 <= TEMPKEY(15 downto 0);
         PKEY5 <= TEMPKEY(102 downto 87);
         PKEY6 <= TEMPKEY(86 downto 71);
-        -- TEMPKEY <= vector_ror(KEYIN, 2 * 25);
       WHEN x"3" =>
-        TEMPKEY <= vector_ror(KEYIN, 2 * 25);
+        TEMPKEY := vector_ror(KEYIN, 2 * 25);
         PKEY1 <= TEMPKEY(95 downto 80);
         PKEY2 <= TEMPKEY(79 downto 64);
         PKEY3 <= TEMPKEY(63 downto 48);
@@ -91,7 +89,7 @@ begin
         PKEY5 <= TEMPKEY(31 downto 16);
         PKEY6 <= TEMPKEY(15 downto 0);
       WHEN x"4" =>
-        TEMPKEY <= vector_ror(KEYIN, 3 * 25);
+        TEMPKEY := vector_ror(KEYIN, 3 * 25);
         PKEY1 <= TEMPKEY(127 downto 112);
         PKEY2 <= TEMPKEY(111 downto 96);
         PKEY3 <= TEMPKEY(95 downto 80);
@@ -99,7 +97,7 @@ begin
         PKEY5 <= TEMPKEY(63 downto 48);
         PKEY6 <= TEMPKEY(47 downto 32);
       WHEN x"5" =>
-        TEMPKEY <= vector_ror(KEYIN, 3 * 25);
+        TEMPKEY := vector_ror(KEYIN, 3 * 25);
         PKEY1 <= TEMPKEY(31 downto 16);
         PKEY2 <= TEMPKEY(15 downto 0);
         PKEY3 <= TEMPKEY(102 downto 87);
@@ -107,7 +105,7 @@ begin
         PKEY5 <= TEMPKEY(70 downto 55);
         PKEY6 <= TEMPKEY(54 downto 39);
       WHEN x"6" =>
-        TEMPKEY <= vector_ror(KEYIN, 4 * 25);
+        TEMPKEY := vector_ror(KEYIN, 4 * 25);
         PKEY1 <= TEMPKEY(63 downto 48);
         PKEY2 <= TEMPKEY(47 downto 32);
         PKEY3 <= TEMPKEY(31 downto 16);
@@ -115,28 +113,21 @@ begin
         PKEY5 <= TEMPKEY(102 downto 87);
         PKEY6 <= TEMPKEY(86 downto 71);
       WHEN x"7" =>
-        TEMPKEY <= vector_ror(KEYIN, 5 * 25);
+        TEMPKEY := vector_ror(KEYIN, 5 * 25);
         PKEY1 <= TEMPKEY(95 downto 80);
         PKEY2 <= TEMPKEY(79 downto 64);
         PKEY3 <= TEMPKEY(63 downto 48);
         PKEY4 <= TEMPKEY(47 downto 32);
         PKEY5 <= TEMPKEY(31 downto 16);
         PKEY6 <= TEMPKEY(15 downto 0);
-      WHEN x"8" =>
-        TEMPKEY <= vector_ror(KEYIN, 6 * 25);
+      WHEN others =>
+        TEMPKEY := vector_ror(KEYIN, 6 * 25);
         PKEY1 <= TEMPKEY(127 downto 112);
         PKEY2 <= TEMPKEY(111 downto 96);
         PKEY3 <= TEMPKEY(95 downto 80);
         PKEY4 <= TEMPKEY(79 downto 64);
         PKEY5 <= TEMPKEY(63 downto 48);
         PKEY6 <= TEMPKEY(47 downto 32);
-      when others =>
-        PKEY1 <= UNDEFINED16;
-        PKEY2 <= UNDEFINED16;
-        PKEY3 <= UNDEFINED16;
-        PKEY4 <= UNDEFINED16;
-        PKEY5 <= UNDEFINED16;
-        PKEY6 <= UNDEFINED16;
     end case;
   end process;
 end Behavioral;

@@ -44,7 +44,7 @@ ARCHITECTURE behavior OF tb_mux2x1 IS
          S : IN  std_logic;
          D0 : IN  std_logic_vector(15 downto 0);
          D1 : IN  std_logic_vector(15 downto 0);
-         Q : OUT  std_logic_vector(15 downto 0)
+         O : OUT  std_logic_vector(15 downto 0)
         );
     END COMPONENT;
     
@@ -55,7 +55,7 @@ ARCHITECTURE behavior OF tb_mux2x1 IS
    signal D1 : std_logic_vector(15 downto 0);
 
  	--Outputs
-   signal Q : std_logic_vector(15 downto 0);
+   signal O : std_logic_vector(15 downto 0);
    -- No clocks detected in port list. Replace <clock> below with 
    -- appropriate port name 
   
@@ -66,7 +66,7 @@ BEGIN
           S => S,
           D0 => D0,
           D1 => D1,
-          Q => Q
+          O => O
         );
  
 
