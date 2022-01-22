@@ -18,11 +18,11 @@
 --
 ----------------------------------------------------------------------------------
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_1164.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.all;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
@@ -30,21 +30,56 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity control is
-    Port ( CLK : in  STD_LOGIC;
-           INIT : in  STD_LOGIC;
-           TRAFO : in STD_LOGIC;
-           EN125 : out  STD_LOGIC;
-           EN346 : out  STD_LOGIC;
-           EN78 : out  STD_LOGIC;
-           RESULT : out  STD_LOGIC;
-           S : out  STD_LOGIC_VECTOR(1 downto 0);
-           S_T: out STD_LOGIC_VECTOR(1 downto 0));	
+  port (
+    CLK : in std_logic;
+    INIT : in std_logic;
+    TRAFO_SIG : in std_logic;
+    EN125 : out std_logic;
+    EN346 : out std_logic;
+    EN78 : out std_logic;
+    RESULT : out std_logic;
+    S : out std_logic_vector(1 downto 0));
 end control;
 
 architecture Behavioral of control is
-
 begin
+  process (CLK)
+    variable internal_state : std_logic_vector(2 downto 0) := "111";
+  begin
+    if rising_edge(CLK) then
+      if (INIT = '1') then
+        internal_state := "000";
+        EN125 <= '0';
+        EN346 <= '0';
+        EN78 <= '0';
+        RESULT <= '0';
+      elsif internal_state /= "111" then
+        -- set outputs as defined
+        case internal_state is
+          when "000" =>
+            EN125 <= '1';
+            S <= "00";
+          when "010" =>
+            EN346 <= '1';
+            S <= "01";
+          when "100" =>
+            EN78 <= '1';
+            S <= "10";
+          when "110" =>
+            RESULT <= '1';
+            S <= "11";
+          when others =>
+            EN125 <= '0';
+            EN346 <= '0';
+            EN78 <= '0';
+        end case;
 
+        -- count up
+        internal_state := internal_state + '1';
+	   else
+		  RESULT <= '0';
+      end if;
+    end if;
+  end process;
 
 end Behavioral;
-
