@@ -41,14 +41,15 @@ ARCHITECTURE behavior OF tb_control IS
  
     COMPONENT control
     PORT(
-         CLK : IN  std_logic;
-         INIT : IN  std_logic;
-         TRAFO_SIG : IN  std_logic;
-         EN125 : OUT  std_logic;
-         EN346 : OUT  std_logic;
-         EN78 : OUT  std_logic;
-         RESULT : OUT  std_logic;
-         S : OUT  std_logic_vector(1 downto 0)
+         CLK : in std_logic;
+			 INIT : in std_logic;
+			 TRAFO_SIG : in std_logic;
+			 EN125 : out std_logic;
+			 EN346 : out std_logic;
+			 EN78 : out std_logic;
+			 RESULT : out std_logic;
+			 S : out std_logic_vector(1 downto 0);
+			 ST : out std_logic_vector(1 downto 0)
         );
     END COMPONENT;
     
@@ -64,7 +65,8 @@ ARCHITECTURE behavior OF tb_control IS
    signal EN78 : std_logic;
    signal RESULT : std_logic;
    signal S : std_logic_vector(1 downto 0);
-
+	signal ST : std_logic_vector(1 downto 0);
+	
    -- Clock period definitions
    constant CLK_period : time := 10 ns;
  
@@ -79,7 +81,8 @@ BEGIN
           EN346 => EN346,
           EN78 => EN78,
           RESULT => RESULT,
-          S => S
+          S => S,
+			 ST => ST
         );
 
    -- Clock process definitions
@@ -104,6 +107,7 @@ BEGIN
 		
 		wait for CLK_period*10;
 		
+		TRAFO_SIG <= '1';
 		INIT <= '1';
 		wait for CLK_period;
 		INIT <= '0';

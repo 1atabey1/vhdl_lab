@@ -154,6 +154,67 @@ begin
     Z5 <= x"0000";
     Z6 <= x"0000";
 
+    while RESULT = '0' loop
+      wait for CLK_period;
+    end loop;
+	 
+	 wait for CLK_period;
+    
+	 -- check outputs
+    assert Y1=x"0001" report "Y1 has wrong value" severity error;
+    assert Y3=x"0000" report "Y2 has wrong value" severity error;
+    assert Y3=x"0000" report "Y3 has wrong value" severity error;
+    assert Y4=x"0001" report "Y4 has wrong value" severity error;
+
+    X1 <= x"ffff";
+    X2 <= x"aaaa";
+    X3 <= x"5555";
+    X4 <= x"2492";
+    Z1 <= x"db6d";
+    Z2 <= x"1c71";
+    Z3 <= x"cccc";
+    Z4 <= x"0002";
+    Z5 <= x"eeee";
+    Z6 <= x"8888";
+
+    INIT <= '1';
+
+    wait for CLK_period;
+
+    INIT <= '0';
+
+    while RESULT = '0' loop
+      wait for CLK_period;
+    end loop;
+	 
+	 wait for CLK_period;
+	 
+    -- check outputs
+    assert Y1=x"2521" report "Y1 has wrong value" severity error;
+    assert Y2=x"4e28" report "Y2 has wrong value" severity error;
+    assert Y3=x"2f99" report "Y3 has wrong value" severity error;
+    assert Y4=x"a1a6" report "Y4 has wrong value" severity error;
+
+    TRAFO_SIG <= '1';
+
+    INIT <= '1';
+
+    wait for CLK_period;
+
+    INIT <= '0';
+
+    while RESULT = '0' loop
+      wait for CLK_period;
+    end loop;
+    
+	 wait for CLK_period;
+	 
+    -- check outputs
+    assert Y1_TRAFO=x"4928" report "YT1 has wrong value" severity error;
+    assert Y2_TRAFO=x"71c6" report "YT2 has wrong value" severity error;
+    assert Y3_TRAFO=x"7776" report "YT3 has wrong value" severity error;
+    assert Y4_TRAFO=x"4924" report "YT4 has wrong value" severity error;
+
     wait;
   end process;
 

@@ -65,12 +65,15 @@ architecture Structural of clockedround is
       EN346 : out std_logic;
       EN78 : out std_logic;
       RESULT : out std_logic;
-      S : out std_logic_vector(1 downto 0));
+      S : out std_logic_vector(1 downto 0);
+      ST : out std_logic_vector(1 downto 0)
+      );
   end component;
   component datapath is
     port (
       CLK : in std_logic;
       S : in std_logic_vector(1 downto 0);
+      ST : in std_logic_vector(1 downto 0);
       EN125 : in std_logic;
       EN346 : in std_logic;
       EN78 : in std_logic;
@@ -87,29 +90,18 @@ architecture Structural of clockedround is
       Y1 : out std_logic_vector(15 downto 0);
       Y2 : out std_logic_vector(15 downto 0);
       Y3 : out std_logic_vector(15 downto 0);
-      Y4 : out std_logic_vector(15 downto 0));
-  end component;
-
-  component TRAFO is
-    port (
-      X1 : in std_logic_vector (15 downto 0);
-      X2 : in std_logic_vector (15 downto 0);
-      X3 : in std_logic_vector (15 downto 0);
-      X4 : in std_logic_vector (15 downto 0);
-      Z1 : in std_logic_vector (15 downto 0);
-      Z2 : in std_logic_vector (15 downto 0);
-      Z3 : in std_logic_vector (15 downto 0);
-      Z4 : in std_logic_vector (15 downto 0);
-      Y1 : out std_logic_vector (15 downto 0);
-      Y2 : out std_logic_vector (15 downto 0);
-      Y3 : out std_logic_vector (15 downto 0);
-      Y4 : out std_logic_vector (15 downto 0));
+      Y4 : out std_logic_vector(15 downto 0);
+      Y1_TRAFO : out std_logic_vector (15 downto 0);
+      Y2_TRAFO : out std_logic_vector (15 downto 0);
+      Y3_TRAFO : out std_logic_vector (15 downto 0);
+      Y4_TRAFO : out std_logic_vector (15 downto 0));
   end component;
 
   signal EN125 : std_logic;
   signal EN346 : std_logic;
   signal EN78 : std_logic;
   signal S : std_logic_vector(1 downto 0);
+  signal ST : std_logic_vector(1 downto 0);
 begin
   controller : control
   port map(
@@ -120,12 +112,14 @@ begin
     EN346 => EN346,
     EN78 => EN78,
     RESULT => RESULT,
-    S => S);
+    S => S,
+    ST => ST);
 
   data : datapath
   port map(
     CLK => CLK,
     S => S,
+    ST => ST,
     EN125 => EN125,
     EN346 => EN346,
     EN78 => EN78,
@@ -142,22 +136,10 @@ begin
     Y1 => Y1,
     Y2 => Y2,
     Y3 => Y3,
-    Y4 => Y4);
-
-  trafo1 : TRAFO
-  port map(
-    X1 => X1,
-    X2 => X2,
-    X3 => X3,
-    X4 => X4,
-    Z1 => Z1,
-    Z2 => Z2,
-    Z3 => Z3,
-    Z4 => Z4,
-    Y1 => Y1_TRAFO,
-    Y2 => Y2_TRAFO,
-    Y3 => Y3_TRAFO,
-    Y4 => Y4_TRAFO
-  );
+    Y4 => Y4,
+    Y1_TRAFO => Y1_TRAFO,
+    Y2_TRAFO => Y2_TRAFO,
+    Y3_TRAFO => Y3_TRAFO,
+    Y4_TRAFO => Y4_TRAFO);
 
 end Structural;

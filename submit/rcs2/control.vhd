@@ -38,7 +38,9 @@ entity control is
     EN346 : out std_logic;
     EN78 : out std_logic;
     RESULT : out std_logic;
-    S : out std_logic_vector(1 downto 0));
+    S : out std_logic_vector(1 downto 0);
+    ST : out std_logic_vector(1 downto 0)
+  );
 end control;
 
 architecture Behavioral of control is
@@ -54,30 +56,59 @@ begin
         EN78 <= '0';
         RESULT <= '0';
       elsif internal_state /= "111" then
-        -- set outputs as defined
-        case internal_state is
-          when "000" =>
-            EN125 <= '1';
-            S <= "00";
-          when "010" =>
-            EN346 <= '1';
-            S <= "01";
-          when "100" =>
-            EN78 <= '1';
-            S <= "10";
-          when "110" =>
-            RESULT <= '1';
-            S <= "11";
-          when others =>
-            EN125 <= '0';
-            EN346 <= '0';
-            EN78 <= '0';
-        end case;
-
+        if TRAFO_SIG = '0' then
+          -- round module
+          case internal_state is
+            when "000" =>
+              EN125 <= '1';
+              ST <= "00";
+              S <= "00";
+            when "010" =>
+              EN346 <= '1';
+              ST <= "01";
+              S <= "01";
+            when "100" =>
+              EN78 <= '1';
+              ST <= "10";
+              S <= "10";
+            when "110" =>
+              RESULT <= '1';
+              ST <= "11";
+              S <= "11";
+            when others =>
+              EN125 <= '0';
+              EN346 <= '0';
+              EN78 <= '0';
+          end case;
+        else
+          -- output transformation
+          case internal_state is
+            when "000" =>
+              EN125 <= '1';
+              S <= "00";
+              ST <= "01";
+            when "010" =>
+              EN346 <= '1';
+              S <= "01";
+              ST <= "00";
+            when "011" =>
+              EN346 <= '0';
+              -- skip 100 and 101
+              internal_state := "101";
+            when "110" =>
+              S <= "11";
+              ST <= "10";
+              RESULT <= '1';
+            when others =>
+              EN125 <= '0';
+              EN346 <= '0';
+              EN78 <= '0';
+          end case;
+        end if;
         -- count up
         internal_state := internal_state + '1';
-	   else
-		  RESULT <= '0';
+      else
+        RESULT <= '0';
       end if;
     end if;
   end process;
